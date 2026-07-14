@@ -1,0 +1,157 @@
+/* 1. Theme Definitions */
+:root {
+    --bg-color: #f9fafb;
+    --text-color: #111827;
+    --sidebar-bg: #111827;
+    --card-bg: #ffffff;
+    --border-color: #e5e7eb;
+}
+
+html.dark-mode {
+    --bg-color: #1f2937;
+    --text-color: #f9fafb;
+    --sidebar-bg: #000000;
+    --card-bg: #374151;
+    --border-color: #4b5563;
+}
+
+/* FIX 1: Reset box-sizing so padding does not cause horizontal scrollbars */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 2. Base Page Structure */
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* 3. Sidebar Layout */
+aside {
+    width: 250px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    color: white;
+    padding: 20px;
+    position: fixed;
+    z-index: 100;
+    /* Flexbox inside sidebar to position the theme toggle at the bottom */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    /* Sidebar Title styling */
+    aside h2 {
+        margin-top: 0;
+        font-size: 1.3rem;
+    }
+
+    aside nav ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+
+        aside nav ul li a {
+            display: block;
+            padding: 15px 0;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-bottom: 1px solid #374151;
+        }
+
+            aside nav ul li a:hover {
+                color: #ffffff;
+            }
+
+/* FIX 3: Styling the theme toggle button inside your sidebar */
+#theme-toggle {
+    background-color: #374151;
+    color: #ffffff;
+    border: 1px solid #4b5563;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    margin-top: 20px;
+}
+
+    #theme-toggle:hover {
+        background-color: #4b5563;
+    }
+
+/* 4. Main Content Area */
+main {
+    flex-grow: 1;
+    /* Adjusted margin-left to match exact sidebar width */
+    margin-left: 250px;
+    padding: 40px;
+    /* Fixed box-sizing allows this 100% calculation to render perfectly */
+    width: calc(100% - 250px);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--card-bg, #fff);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid var(--border-color);
+}
+
+canvas#myChart {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+/* ==========================================
+   FIX 2: Responsive Design for Mobile (Screens under 768px wide)
+   ========================================== */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; /* Stack sidebar and main content vertically */
+    }
+
+    aside {
+        position: relative; /* Remove the fixed screen position on mobile */
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+
+        aside nav ul {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+            aside nav ul li {
+                flex: 1;
+                text-align: center;
+            }
+
+                aside nav ul li a {
+                    border-bottom: none;
+                    padding: 10px 0;
+                }
+
+    main {
+        margin-left: 0; /* Clear left margin since sidebar is no longer fixed */
+        width: 100%;
+        padding: 20px;
+    }
+}

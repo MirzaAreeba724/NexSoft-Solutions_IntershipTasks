@@ -1,0 +1,39 @@
+extends shop-layout
+
+block content
+  .row.justify-content-center.mt-5
+    .col-md-5.me-md-4.mb-4
+      .card.shadow-sm
+        .card-header.bg-primary.text-white
+          h3.h5.mb-0 Log In to Your Account
+        .card-body
+          form(action="/ecommerce/login" method="POST") 
+            .mb-3
+              label.form-label Email Address
+              input.form-control(type="email" name="email" required)
+            .mb-3
+              label.form-label Password
+              input.form-control(type="password" name="password" required)
+            button.btn.btn-primary.w-100(type="submit") Log In
+
+    .col-md-5.mb-4
+      .card.shadow-sm
+        .card-header.bg-success.text-white
+          h3.h5.mb-0 Register New Customer
+        .card-body
+          form(action="/ecommerce/register" method="POST") 
+            .mb-3
+              label.form-label Full Name
+              input.form-control(type="text" name="name" required)
+            .mb-3
+              label.form-label Email Address
+              input.form-control(type="email" name="email" required)
+            .mb-3
+              label.form-label Password
+              input.form-control(type="password" name="password" required)
+            button.btn.btn-success.w-100(type="submit") Create Account
+
+  if error
+    .row.justify-content-center.mt-3
+      .col-md-10
+        .alert.alert-danger.text-center #{error}

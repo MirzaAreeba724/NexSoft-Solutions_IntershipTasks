@@ -1,0 +1,130 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title= title
+    link(rel="stylesheet", href="/stylesheets/style.css")
+    link(rel="stylesheet", href="/stylesheets/tasks.css")
+  body
+    div.task-workspace
+      header.workspace-header
+        div.logo-section
+          h1 Task Manager Board
+          p Welcome back, 
+            strong #{currentUser.username} 
+            span.role-badge(class=currentUser.role) (#{currentUser.role})
+        div.nav-actions
+          a(href="/", class="nav-btn") ← Hub Dashboard
+          a(href="/tasks/logout", class="logout-btn") Logout
+
+      main.workspace-grid
+        // Left Column: Task Assigner & Team Members
+        aside.workspace-sidebar
+          if currentUser.role === 'admin' || currentUser.role === 'manager'
+            div.sidebar-card
+              h3 Assign Team Task
+              form(action="/tasks/create", method="POST")
+                div.form-group
+                  label(for="task-title") Title
+                  input#task-title(type="text", name="title", required)
+                div.form-group
+                  label(for="task-desc") Description
+                  textarea#task-desc(name="description", rows="3")
+                div.form-group
+                  label(for="task-priority") Priority
+                  select#task-priority(name="priority")
+                    option(value="Low") Low
+                    option(value="Medium" selected) Medium
+                    option(value="High") High
+                div.form-group
+                  label(for="task-assign") Assign To
+                  select#task-assign(name="assignedTo")
+                    option(value="Unassigned") Unassigned
+                    each user in teamUsers
+                      option(value=user.username)= user.username
+                div.form-group
+                  label(for="task-due") Due Date
+                  input#task-due(type="date", name="dueDate")
+                button.btn-primary.btn-full(type="submit") Assign Task
+          else
+            div.sidebar-card.info-card
+              h3 Team Assignment Panel
+              p You are logged in as a <strong>Team Member</strong>. You can view, update progress, and comment on tasks assigned directly to you.
+
+          // Team Directory List
+          div.sidebar-card
+            h3 Team Directory
+            ul.team-list
+              each user in teamUsers
+                li.team-member
+                  span.member-name= user.username
+                  span.member-role(class=user.role)= user.role
+
+        // Right Column: Board Status Columns
+        section.workspace-boards
+          div.board-columns
+            // Pending Column
+            div.status-column
+              h2.column-header.pending Pending (##{tasks.filter(t => t.status === 'Pending').length})
+              div.cards-container
+                each task in tasks.filter(t => t.status === 'Pending')
+                  +taskCard(task)
+
+            // In Progress Column
+            div.status-column
+              h2.column-header.progress In Progress (##{tasks.filter(t => t.status === 'In Progress').length})
+              div.cards-container
+                each task in tasks.filter(t => t.status === 'In Progress')
+                  +taskCard(task)
+
+            // Completed Column
+            div.status-column
+              h2.column-header.completed Completed (##{tasks.filter(t => t.status === 'Completed').length})
+              div.cards-container
+                each task in tasks.filter(t => t.status === 'Completed')
+                  +taskCard(task)
+
+    // Mixin structure to render individual cards
+    mixin taskCard(task)
+      div.task-card-item(class=task.priority.toLowerCase())
+        div.card-meta
+          span.priority-tag(class=task.priority.toLowerCase())= task.priority
+          if currentUser.role === 'admin' || currentUser.role === 'manager' || task.assignedTo === currentUser.username
+            a.delete-link(href=`/tasks/delete/${task._id}`, onclick="return confirm('Delete this task?');") ✕
+        h3.task-title= task.title
+        p.task-desc= task.description
+        
+        div.task-assignment
+          span.meta-label Assigned to:
+          strong= task.assignedTo
+        
+        if task.dueDate
+          div.task-due
+            span.meta-label Due Date:
+            span.due-date= new Date(task.dueDate).toLocaleDateString()
+
+        // Inline status/priority change updates
+        if currentUser.role === 'admin' || currentUser.role === 'manager' || task.assignedTo === currentUser.username
+          form.status-update-form(action=`/tasks/update/${task._id}`, method="POST")
+            div.update-row
+              select(name="status", onchange="this.form.submit()")
+                option(value="Pending" selected=task.status === 'Pending') Pending
+                option(value="In Progress" selected=task.status === 'In Progress') In Progress
+                option(value="Completed" selected=task.status === 'Completed') Completed
+              select(name="priority", onchange="this.form.submit()")
+                option(value="Low" selected=task.priority === 'Low') Low
+                option(value="Medium" selected=task.priority === 'Medium') Medium
+                option(value="High" selected=task.priority === 'High') High
+
+        // Real-time comments logs inside card
+        div.comments-section
+          h4 Comments (##{task.comments.length})
+          ul.comments-list
+            each comment in task.comments
+              li.comment-item
+                span.comment-author= comment.author + ":"
+                span.comment-text= comment.text
+          
+          form.comment-form(action=`/tasks/comment/${task._id}`, method="POST")
+            input(type="text", name="text", placeholder="Add collaboration comment...", required)
+            button(type="submit") →

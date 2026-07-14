@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  .dashboard-container
+    header.dashboard-header
+      h1 My Notes
+      
+      form(action="/notes", method="GET", style="margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;")
+        input(type="text", name="search", placeholder="Search notes...", value=searchQuery || '', style="padding: 10px; width: 300px; border-radius: 8px; border: 1px solid #374151; background: #0b0f19; color: white;")
+        button(type="submit", class="launch-btn", style="width: auto; padding: 10px 20px;") Search
+      
+      a(href="/add-note", class="launch-btn", style="max-width: 200px; margin: 0 auto;") + Add New Note
+    
+    .grid-layout
+      if notes && notes.length > 0
+        each note in notes
+          .task-card
+            h3= note.title
+            p(style="margin-bottom: 10px;")= note.content
+            p(style="margin-bottom: 15px; color: #94a3b8; font-size: 0.85rem;") Created: #{new Date(note.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+            div(style="display: flex; gap: 10px;")
+              a(href=`/edit-note/${note._id}`, class="launch-btn", style="background-color: #059669; flex: 1;") ✏️ Edit
+              form(action=`/delete-note/${note._id}`, method="POST", style="flex: 1;")
+                button(type="submit", class="launch-btn", style="background-color: #dc2626; width: 100%; border: none; cursor: pointer;", onclick="return confirm('Delete this note?')") 🗑️ Delete
+      else
+        p(style="color: #94a3b8; text-align: center; margin-top: 20px;") 
+          | No notes found
+          if searchQuery
+            |  matching your search.

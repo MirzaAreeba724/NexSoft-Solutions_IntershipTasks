@@ -1,0 +1,254 @@
+doctype html
+html
+  head
+    title Expense Tracker
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    style.
+      /* ==========================================
+         DARK THEME COLORS SET AS DEFAULT
+         ========================================== */
+      :root {
+        --bg-color: #121824;      /* Deep dark background */
+        --card-bg: #1e2530;       /* Card background */
+        --text-color: #f9fafb;    /* Light text color */
+        --text-muted: #9ca3af;    /* Muted text color */
+        --border-color: #374151;  /* Dark border color */
+        --primary: #3b82f6;       /* Vibrant blue primary */
+        --primary-hover: #2563eb; /* Darker blue hover */
+      }
+
+      /* ==========================================
+         BASE PAGE STYLES
+         ========================================== */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        min-height: 100vh;
+        box-sizing: border-box;
+      }
+
+      .tracker-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* ==========================================
+         BACK BUTTON STYLING
+         ========================================== */
+      .btn-back {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text-color);
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        padding: 10px 18px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 30px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        transition: background-color 0.2s, border-color 0.2s;
+      }
+
+      .btn-back:hover {
+        background-color: var(--border-color);
+      }
+
+      /* ==========================================
+         TRACKER COMPONENTS
+         ========================================== */
+      .balance-display {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .balance-display h2 {
+        font-size: 2.5rem;
+        margin: 10px 0 0 0;
+      }
+
+      .tracker-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .income-expense-box {
+        display: flex;
+        justify-content: space-around;
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        text-align: center;
+      }
+
+      .box-col h3 {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin: 0 0 5px 0;
+      }
+
+      .box-col p {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .text-green { color: #10b981; }
+      .text-red { color: #ef4444; }
+
+      .card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 24px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .form-control, .form-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        box-sizing: border-box;
+        font-size: 1rem;
+      }
+
+      .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .btn-submit:hover {
+        background-color: var(--primary-hover);
+      }
+
+      .history-list {
+        margin-top: 15px;
+      }
+
+      .history-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        position: relative;
+      }
+
+      .history-item::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 6px;
+        border-radius: 0 6px 6px 0;
+      }
+
+      .history-item.income::after { background-color: #10b981; }
+      .history-item.expense::after { background-color: #ef4444; }
+
+      .history-item h4 { margin: 0; font-size: 1.1rem; }
+      .history-item span { font-weight: bold; font-size: 1.1rem; }
+
+      .btn-delete {
+        background: none;
+        border: none;
+        color: #ef4444;
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0 5px;
+        margin-left: 15px;
+      }
+
+      .btn-delete:hover {
+        color: #b91c1c;
+      }
+
+  body
+    .tracker-container
+      a.btn-back(href="/notes") ← Back to Notes
+
+      h1(style="text-align: center; margin-bottom: 40px;") Expense Tracker Dashboard
+
+      .balance-display
+        h3 Current Balance
+        h2(class=(totalBalance >= 0 ? "text-green" : "text-red")) $#{totalBalance}
+
+      .tracker-grid
+        .income-expense-box
+          .box-col(style="border-right: 1px solid var(--border-color); padding-right: 20px;")
+            h3 Income
+            p.text-green +$#{income}
+          .box-col(style="padding-left: 20px;")
+            h3 Expenses
+            p.text-red -$#{expense}
+
+      .tracker-grid
+        // Add Transaction Card
+        .card
+          h3(style="margin-bottom: 20px; text-transform: uppercase; font-size: 0.9rem; color: var(--text-muted);") Add New Transaction
+          form(action="/expense/add", method="POST")
+            .form-group
+              label Description
+              input.form-control(type="text", name="description", placeholder="e.g., Groceries, Salary, Rent", required)
+            .form-group
+              label Amount ($)
+              input.form-control(type="number", step="0.01", name="amount", placeholder="e.g., 50.00", required)
+            .form-group
+              label Type
+              select.form-select(name="type", required)
+                option(value="expense") Expense
+                option(value="income") Income
+            button.btn-submit(type="submit") Submit Transaction
+
+        // History Card
+        .card
+          h3(style="margin-bottom: 20px; text-transform: uppercase; font-size: 0.9rem; color: var(--text-muted);") Transaction History
+          if transactions && transactions.length > 0
+            .history-list
+              each transaction in transactions
+                .history-item(class=(transaction.type === 'income' ? 'income' : 'expense'))
+                  div
+                    h4 #{transaction.description}
+                    small(style="color: var(--text-muted);") #{new Date(transaction.date).toLocaleDateString()}
+                  div(style="display: flex; align-items: center;")
+                    span(class=(transaction.type === 'income' ? 'text-green' : 'text-red')) 
+                      | #{transaction.type === 'income' ? '+' : '-'} $#{transaction.amount.toFixed(2)}
+                    form(action=`/expense/delete/${transaction._id}`, method="POST" style="margin: 0; display: inline;")
+                      button.btn-delete(type="submit" title="Delete") &times;
+          else
+            p(style="color: var(--text-muted); text-align: center; margin-top: 40px;") No transactions recorded yet.

@@ -1,0 +1,21 @@
+extends blog-layout
+
+block content
+  a(href="/blog" style="color: var(--text-muted); text-decoration: none; display: inline-block; margin-bottom: 20px;") &larr; Cancel
+
+  .card
+    h1(style="margin-top: 0;") #{isEdit ? 'Edit Post' : 'Create New Post'}
+    
+    if error
+      .error-alert #{error}
+
+    form(action=(isEdit ? `/blog/edit/${post._id}` : '/blog/new'), method="POST")
+      .form-group
+        label(for="title") Article Title
+        input#title.form-control(type="text", name="title", required, value=(isEdit ? post.title : ''))
+      
+      .form-group
+        label(for="content") Article Content
+        textarea#content.form-control(name="content", rows="12", required, style="resize: vertical;")=(isEdit ? post.content : '')
+
+      button.btn(type="submit") #{isEdit ? 'Save Changes' : 'Publish Article'}

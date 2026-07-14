@@ -1,0 +1,51 @@
+extends shop-layout
+
+block content
+  h1.mb-4.fw-bold Your Cart
+  
+  if cart && cart.items.length > 0
+    .row
+      .col-lg-8.mb-4
+        .card.shadow-sm
+          .card-body
+            .table-responsive
+              table.table.align-middle
+                thead
+                  tr
+                    th Product
+                    th Price
+                    th Quantity
+                    th Total
+                    th Remove
+                tbody
+                  - var calculatedTotal = 0
+                  each item in cart.items
+                    if item.productId
+                      - var itemSubtotal = item.productId.price * item.quantity
+                      - calculatedTotal += itemSubtotal
+                      tr
+                        td
+                          p.mb-0.fw-bold= item.productId.name
+                        td $#{item.productId.price.toFixed(2)}
+                        td= item.quantity
+                        td.fw-bold $#{itemSubtotal.toFixed(2)}
+                        td
+                          form(action="/ecommerce/cart/remove" method="POST") 
+                            input(type="hidden" name="productId" value=item.productId._id)
+                            button.btn.btn-danger.btn-sm(type="submit") Delete
+              
+      .col-lg-4
+        .card.shadow-sm
+          .card-body
+            h4.fw-bold Order Summary
+            hr
+            .d-flex.justify-content-between.mb-4
+              span.fs-5 Total Amount:
+              span.fs-5.fw-bold.text-success $#{calculatedTotal.toFixed(2)}
+            form(action="/ecommerce/checkout" method="POST") 
+              button.btn.btn-primary.w-100.btn-lg(type="submit") Proceed to Checkout
+  else
+    .alert.alert-warning.text-center.p-5
+      h3.h4 Your Shopping Cart is Empty.
+      p.mb-3 Discover products inside our catalog.
+      a.btn.btn-primary(href="/ecommerce") Continue Shopping 

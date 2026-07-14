@@ -1,0 +1,81 @@
+extends shop-layout
+
+block content
+  h1.mb-5.fw-bold Store Administration Panel
+
+  .row
+    // Add Product Card
+    .col-md-4.mb-4
+      .card.shadow-sm
+        .card-header.bg-dark.text-white
+          h3.h5.mb-0 Add New Store Product
+        .card-body
+          form(action="/ecommerce/admin/product/add" method="POST") 
+            .mb-3
+              label.form-label Product Title
+              input.form-control(type="text" name="name" required)
+            .mb-3
+              label.form-label Description
+              textarea.form-control(name="description" rows="3" required)
+            .mb-3
+              label.form-label Unit Price ($)
+              input.form-control(type="number" step="0.01" name="price" required)
+            .mb-3
+              label.form-label Initial Inventory Stock
+              input.form-control(type="number" name="stock" value="10" required)
+            .mb-3
+              label.form-label Image URL (Optional)
+              input.form-control(type="text" name="image" placeholder="https://url-to-image.png")
+            button.btn.btn-dark.w-100(type="submit") Publish Product Listing
+
+    // Product Listing View
+    .col-md-8.mb-4
+      .card.shadow-sm.mb-4
+        .card-header.bg-secondary.text-white
+          h3.h5.mb-0 Current Catalog Listings
+        .card-body
+          if products && products.length > 0
+            .table-responsive
+              table.table.table-striped.align-middle
+                thead
+                  tr
+                    th Product Name
+                    th Price
+                    th Stock Level
+                    th.text-end Actions
+                tbody
+                  each prod in products
+                    tr
+                      td.fw-bold= prod.name
+                      td $#{prod.price.toFixed(2)}
+                      td= prod.stock
+                      td.text-end
+                        form(action=`/ecommerce/admin/product/delete/${prod._id}` method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');")
+                          button.btn.btn-danger.btn-sm(type="submit") Delete
+          else
+            p.text-muted.text-center No listed inventory.
+
+      // Order Records
+      .card.shadow-sm
+        .card-header.bg-info.text-white
+          h3.h5.mb-0 Placed Store Orders
+        .card-body
+          if orders && orders.length > 0
+            .table-responsive
+              table.table.table-hover.align-middle
+                thead
+                  tr
+                    th Order Reference ID
+                    th Customer Email
+                    th Price
+                    th Status
+                tbody
+                  each ord in orders
+                    tr
+                      td= ord._id
+                      td= ord.userId ? ord.userId.email : 'Deleted User'
+                      td.fw-bold $#{ord.totalAmount.toFixed(2)}
+                      td
+                        span.badge.bg-success= ord.status
+          else
+            p.text-muted.text-center No orders have been placed.

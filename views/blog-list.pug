@@ -1,0 +1,22 @@
+extends blog-layout
+
+block content
+  div(style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;")
+    h1 Recent Articles
+    if is_logged_in
+      a.btn(href="/blog/new") + Create Article
+
+  if posts && posts.length > 0
+    .posts-list
+      each post in posts
+        .card(style="margin-bottom: 25px;")
+          h2(style="margin-top: 0; font-size: 1.6rem;")
+            a(href=`/blog/post/${post._id}` style="color: var(--text-color); text-decoration: none;") #{post.title}
+          p(style="color: var(--text-muted); font-size: 0.9rem;") 
+            | By #{post.authorName} on #{new Date(post.date).toLocaleDateString()}
+          p(style="line-height: 1.6; margin: 15px 0;") 
+            | #{post.content.substring(0, 150)}...
+          a(href=`/blog/post/${post._id}` style="color: var(--primary); text-decoration: none; font-weight: bold;") Read Article &rarr;
+  else
+    .card(style="text-align: center; padding: 40px;")
+      p(style="color: var(--text-muted); font-size: 1.2rem;") No blog posts have been created yet.

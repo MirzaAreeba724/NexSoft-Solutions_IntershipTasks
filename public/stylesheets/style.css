@@ -1,0 +1,131 @@
+/* --- Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0b0f19;
+    color: #f1f5f9;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.dashboard-container {
+    max-width: 1100px;
+    width: 0 auto;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+    .dashboard-header h1 {
+        font-size: 2.5rem;
+        color: #38bdf8;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-header p {
+        color: #94a3b8;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+/* --- Grid Layout --- */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* --- Task Card Base --- */
+.task-card {
+    background-color: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    padding: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+    .task-card:hover {
+        transform: translateY(-5px);
+        border-color: #38bdf8;
+    }
+
+    .task-card h3 {
+        font-size: 1.4rem;
+        color: #f8fafc;
+        margin-bottom: 15px;
+        padding-right: 80px;
+    }
+
+    .task-card p {
+        color: #94a3b8;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 25px;
+        flex-grow: 1;
+    }
+
+/* --- Status Badge Logic --- */
+.status-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+    /* Tier 1: Basic (Blue) */
+    .status-badge.basic {
+        background-color: rgba(56, 189, 248, 0.1);
+        color: #38bdf8;
+        border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+    /* Tier 2: Medium (Orange) */
+    .status-badge.medium {
+        background-color: rgba(245, 158, 11, 0.1);
+        color: #fbbf24;
+        border: 1px solid rgba(251, 191, 36, 0.2);
+    }
+    /* Tier 3: Hard (Red) */
+    .status-badge.hard {
+        background-color: rgba(239, 68, 68, 0.1);
+        color: #f87171;
+        border: 1px solid rgba(248, 113, 113, 0.2);
+    }
+
+/* --- Buttons --- */
+.launch-btn {
+    display: block;
+    text-align: center;
+    background-color: #0284c7;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+    .launch-btn:hover {
+        background-color: #0369a1;
+    }
+
+.dashboard-footer {
+    text-align: center;
+    color: #4b5563;
+    font-size: 0.85rem;
+    margin-top: 40px;
+}

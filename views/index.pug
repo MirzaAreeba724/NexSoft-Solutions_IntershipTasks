@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  
+  form(action="/add-note", method="POST")
+    input(type="text", name="title", placeholder="Note Title")
+    br
+    textarea(name="content", placeholder="Note Content")
+    br
+    button(type="submit") Save Note

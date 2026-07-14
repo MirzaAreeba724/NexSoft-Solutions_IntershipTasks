@@ -1,0 +1,27 @@
+extends admin-layout
+
+block content
+  h1 Settings
+  .card
+    h3 App Configuration
+    //- The action "/admin/settings/save" points to your server route
+    form(action="/admin/settings/save", method="POST", onsubmit="savePreferences()")
+      label(style="display: block; margin-bottom: 10px;") 
+        input(type="checkbox", name="darkMode", id="darkModeCheck")
+        |  Enable Dark Mode
+      label(style="display: block; margin-bottom: 10px;") 
+        input(type="checkbox", name="notifications", id="notifCheck")
+        |  Show Analytics Notifications
+      button(type="submit") Save Changes
+
+  script.
+    // 1. On page load: sync checkbox with LocalStorage
+    document.getElementById('darkModeCheck').checked = (localStorage.getItem('theme') === 'dark');
+
+    // 2. On form submit: update LocalStorage and UI
+    function savePreferences() {
+      // Fixed the typo here: getElementById
+      const isDark = document.getElementById('darkModeCheck').checked;
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark-mode', isDark);
+    }

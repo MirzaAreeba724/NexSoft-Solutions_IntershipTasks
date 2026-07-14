@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title Admin Panel
+    link(rel="stylesheet", href="/stylesheets/admin.css")
+    script.
+      // Load saved theme immediately to prevent flashing
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+  body
+    aside
+      h2 Admin Panel
+      nav
+        ul
+          li: a(href="/admin/dashboard") Dashboard
+          li: a(href="/admin/movies") Movies
+          li: a(href="/admin/settings") Settings
+      button#theme-toggle(onclick="toggleTheme()") Toggle Dark/Light Mode
+    main
+      block content
+    script.
+      function toggleTheme() {
+        const isDark = document.documentElement.classList.toggle('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      }

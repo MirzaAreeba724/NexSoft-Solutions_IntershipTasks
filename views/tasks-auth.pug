@@ -1,0 +1,53 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title= title
+    link(rel="stylesheet", href="/stylesheets/style.css")
+    link(rel="stylesheet", href="/stylesheets/tasks.css")
+  body
+    div.dashboard-container
+      header.dashboard-header
+        h1 Task Management System
+        p Login or Register to collaborate with your team.
+        a(href="/", class="back-link") ← Return to Dashboard
+
+      div.auth-container
+        if error
+          div.error-banner= error
+        if success
+          div.success-banner= success
+
+        div.auth-grid
+          // Login Form
+          div.auth-card
+            h2 Account Login
+            form(action="/tasks/login", method="POST")
+              div.form-group
+                label(for="login-email") Email Address
+                input#login-email(type="email", name="email", required, placeholder="name@company.com")
+              div.form-group
+                label(for="login-password") Password
+                input#login-password(type="password", name="password", required, placeholder="••••••••")
+              button.btn-primary(type="submit") Secure Login
+
+          // Registration Form
+          div.auth-card
+            h2 Team Registration
+            form(action="/tasks/register", method="POST")
+              div.form-group
+                label(for="reg-username") Username
+                input#reg-username(type="text", name="username", required, placeholder="johndoe")
+              div.form-group
+                label(for="reg-email") Email Address
+                input#reg-email(type="email", name="email", required, placeholder="member@company.com")
+              div.form-group
+                label(for="reg-password") Password
+                input#reg-password(type="password", name="password", required, placeholder="••••••••")
+              div.form-group
+                label(for="reg-role") Organization Role
+                select#reg-role(name="role")
+                  option(value="member") Team Member (View & Update own Tasks)
+                  option(value="manager") Project Manager (Assign Tasks)
+                  option(value="admin") Administrator (Full Access)
+              button.btn-secondary(type="submit") Create Account

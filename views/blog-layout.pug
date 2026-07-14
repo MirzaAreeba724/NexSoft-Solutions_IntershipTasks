@@ -1,0 +1,125 @@
+doctype html
+html
+  head
+    title= title || 'Blog Platform'
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    style.
+      :root {
+        --bg-color: #0f172a;
+        --card-bg: #1e293b;
+        --text-color: #f8fafc;
+        --text-muted: #94a3b8;
+        --border-color: #334155;
+        --primary: #3b82f6;
+        --primary-hover: #2563eb;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        min-height: 100vh;
+      }
+      .blog-navbar {
+        background-color: #020617;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .blog-navbar h2 {
+        margin: 0;
+        font-size: 1.3rem;
+      }
+      .blog-navbar a {
+        color: var(--text-color);
+        text-decoration: none;
+        margin-left: 20px;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      .blog-navbar a:hover {
+        color: var(--primary);
+      }
+      .container {
+        max-width: 850px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      .btn {
+        display: inline-block;
+        background-color: var(--primary);
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .btn:hover {
+        background-color: var(--primary-hover);
+      }
+      .card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .btn-danger {
+        background-color: #ef4444;
+      }
+      .btn-danger:hover {
+        background-color: #dc2626;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background-color: #0f172a;
+        color: var(--text-color);
+        box-sizing: border-box;
+        font-size: 1rem;
+      }
+      .error-alert {
+        background-color: rgba(239, 68, 68, 0.1);
+        border: 1px solid #ef4444;
+        color: #fca5a5;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+      }
+      .success-alert {
+        background-color: rgba(16, 185, 129, 0.1);
+        border: 1px solid #10b981;
+        color: #a7f3d0;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+      }
+  body
+    header.blog-navbar
+      h2: a(href="/blog") ✍️ Tech Blog
+      nav
+        a(href="/blog") Home
+        if is_logged_in
+          a(href="/blog/new") + New Post
+          span(style="color: var(--text-muted); margin-left: 15px;") Hello, #{currentUser.username}
+          a(href="/blog/logout" style="color: #ef4444;") Logout
+        else
+          a(href="/blog/login") Login / Register
+    .container
+      block content

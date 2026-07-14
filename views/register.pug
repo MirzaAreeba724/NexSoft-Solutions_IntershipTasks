@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  .dashboard-container
+    header.dashboard-header
+      h1 Register
+    
+    .task-card(style="max-width: 400px; margin: 0 auto;")
+      if error
+        .error-banner(style="background-color: rgba(244, 63, 94, 0.1); border: 1px solid #f43f5e; color: #f43f5e; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;")= error
+      
+      form(action="/register", method="POST")
+        div(style="margin-bottom: 15px;")
+          label(style="display: block; margin-bottom: 5px; color: #94a3b8;") Username
+          input(type="text", name="username", placeholder="Choose username...", required, style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #0b0f19; color: white;")
+        
+        div(style="margin-bottom: 15px;")
+          label(style="display: block; margin-bottom: 5px; color: #94a3b8;") Email
+          input(type="email", name="email", placeholder="Enter email...", required, style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #0b0f19; color: white;")
+        
+        div(style="margin-bottom: 20px;")
+          label(style="display: block; margin-bottom: 5px; color: #94a3b8;") Password
+          input(type="password", name="password", placeholder="Choose password...", required, style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #0b0f19; color: white;")
+        
+        button(type="submit", class="launch-btn", style="width: 100%; margin-bottom: 15px;") Register
+      
+      p(style="color: #94a3b8; text-align: center; font-size: 0.9rem;")
+        | Already have an account? 
+        a(href="/login", style="color: #38bdf8; text-decoration: none;") Login here

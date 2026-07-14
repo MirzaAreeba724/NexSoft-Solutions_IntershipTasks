@@ -1,0 +1,29 @@
+extends shop-layout
+
+block content
+  h1.mb-4.fw-bold Store Catalog
+  .row
+    if products && products.length > 0
+      each prod in products
+        .col-md-4.mb-4
+          .card.h-100.shadow-sm
+            img.card-img-top(src=prod.image alt=prod.name style="height: 200px; object-fit: cover;")
+            .card-body.d-flex.flex-column
+              h5.card-title.fw-bold= prod.name
+              p.card-text.text-muted.small= prod.description
+              .mt-auto
+                p.fs-5.text-primary.fw-bold.mb-1 $#{prod.price.toFixed(2)}
+                p.small.text-secondary.mb-3 Units Remaining: #{prod.stock}
+                
+                if prod.stock > 0
+                  form(action="/ecommerce/cart/add" method="POST") 
+                    input(type="hidden" name="productId" value=prod._id)
+                    .input-group.mb-2
+                      span.input-group-text Qty
+                      input.form-control(type="number" name="quantity" value="1" min="1" max=prod.stock required)
+                    button.btn.btn-success.w-100(type="submit") Add To Cart
+                else
+                  button.btn.btn-secondary.w-100(disabled) Out of Stock
+    else
+      .col-12
+        .alert.alert-info.text-center No products are currently listed in the store.

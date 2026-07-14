@@ -1,0 +1,52 @@
+extends layout
+
+block content
+  .dashboard-container
+    header.dashboard-header
+      h1 Movie Search
+      form(action="/movies", method="GET", style="margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;")
+        input(type="text", name="search", placeholder="Search movies...", value=searchQuery || '', style="padding: 10px; width: 300px; border-radius: 8px;")
+        button(type="submit", class="launch-btn") Search
+    
+    if errorMessage
+      .error-banner(style="background-color: #fee2e2; border: 2px solid #ef4444; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;")
+        p= errorMessage
+    
+    .grid-layout
+      if searchQuery && (!movies || movies.length === 0) && !errorMessage
+        .empty-state(style="text-align: center; padding: 50px; color: #94a3b8;")
+          p 🎬 No movies found for "#{searchQuery}"
+      else if !searchQuery
+        .empty-state(style="text-align: center; padding: 50px; color: #94a3b8;")
+          p 🎬 Search for a movie to get started
+      else if movies && movies.length > 0
+        each movie in movies
+          .task-card(style="display: flex; flex-direction: column; height: 100%;")
+            //- Image Container
+            .image-container(style="width: 100%; height: 280px; background-color: #1f2937; border-radius: 8px 8px 0 0; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px;")
+              if movie.Poster && movie.Poster !== "N/A"
+                img(src=movie.Poster, alt=movie.Title, style="width: 100%; height: 100%; object-fit: cover;", onerror="this.parentElement.innerHTML='<p style=\"color: #4b5563;\">No Image</p>'")
+              else
+                p(style="color: #4b5563; text-align: center;") 🎬 No Poster
+            
+            //- Content Container
+            .content-container(style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 10px;")
+              div
+                h3(style="margin: 0 0 8px 0; font-size: 16px; word-wrap: break-word;")= movie.Title || 'Unknown Title'
+                p(style="margin: 0; color: #94a3b8; font-size: 14px;")= movie.Year || 'Year Unknown'
+                p(style="margin: 5px 0 0 0; color: #64748b; font-size: 13px;")= `Type: ${movie.Type || 'N/A'}`
+              
+              //- View Details Button (Optional)
+              button(style="margin-top: 10px; padding: 8px 12px; background-color: #0ea5e9; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;") View Details
+
+    //- Pagination Controls
+    if totalResults > 10
+      .pagination(style="text-align: center; margin: 30px 0; display: flex; justify-content: center; gap: 10px; align-items: center;")
+        if currentPage > 1
+          a(href=`/movies?search=${encodeURIComponent(searchQuery)}&page=${currentPage - 1}`, class="launch-btn", style="width: 100px; text-decoration: none;") ← Previous
+        
+        span(style="color: #94a3b8; font-weight: bold;") 
+          | Page #{currentPage} of #{totalPages}
+        
+        if currentPage < totalPages
+          a(href=`/movies?search=${encodeURIComponent(searchQuery)}&page=${currentPage + 1}`, class="launch-btn", style="width: 100px; text-decoration: none;") Next →

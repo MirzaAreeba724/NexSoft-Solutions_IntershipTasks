@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  .dashboard-container
+    header.dashboard-header
+      h1 Add New Note
+    
+    .task-card(style="max-width: 500px; margin: 0 auto;")
+      form(action="/add-note", method="POST")
+        div(style="margin-bottom: 15px;")
+          label(style="display: block; margin-bottom: 5px; color: #94a3b8; font-weight: 600;") Note Title
+          input(type="text", name="title", placeholder="Enter note title...", required, style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #0b0f19; color: white; font-size: 1rem;")
+        
+        div(style="margin-bottom: 20px;")
+          label(style="display: block; margin-bottom: 5px; color: #94a3b8; font-weight: 600;") Note Content
+          textarea(name="content", placeholder="Write your note here...", required, style="width: 100%; height: 150px; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #0b0f19; color: white; font-size: 1rem; resize: vertical;")
+        
+        div(style="display: flex; gap: 10px;")
+          button(type="submit", class="launch-btn", style="flex: 1;") 💾 Save Note
+          a(href="/notes", class="launch-btn", style="flex: 1; background-color: #6b7280; text-align: center; text-decoration: none;") ❌ Cancel

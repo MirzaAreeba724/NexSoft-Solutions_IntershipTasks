@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic To-Do Workspace | Task 3</title>
+    <link rel="stylesheet" href="/stylesheets/todo.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Task<span>Flow.</span></div>
+        <ul class="nav-links">
+            <li><a href="/">Dashboard Hub</a></li>
+        </ul>
+    </nav>
+
+    <main class="todo-container">
+        <div class="todo-card">
+            <h2>Task Management Board</h2>
+            <p class="subtitle">Organize and filter your engineering tasks seamlessly.</p>
+
+            <!-- Task Input Form Group -->
+            <form id="todo-form" class="todo-input-group">
+                <input type="text" id="task-input" placeholder="Enter a new milestone task..." required maxlength="100">
+                <button type="submit" class="add-btn">Add Task</button>
+            </form>
+
+            <!-- Filter Controls Frame -->
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all">All Tasks</button>
+                <button class="filter-btn" data-filter="pending">Pending</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+
+            <!-- Empty State Warning Message -->
+            <div id="empty-state" class="empty-state hidden">
+                <p>No tasks found matching this criteria.</p>
+            </div>
+
+            <!-- Dynamic Task List Injector Stack -->
+            <ul id="task-list" class="task-list">
+                <!-- JavaScript injection point for task nodes -->
+            </ul>
+        </div>
+    </main>
+
+    <script src="/javascript/todo.js"></script>
+</body>
+</html>

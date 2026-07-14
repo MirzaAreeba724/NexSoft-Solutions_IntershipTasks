@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Grid Calculator | Task 4</title>
+    <link rel="stylesheet" href="/stylesheets/calculator.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Calc<span>Core.</span></div>
+        <ul class="nav-links">
+            <li><a href="/">Dashboard Hub</a></li>
+        </ul>
+    </nav>
+
+    <main class="calculator-container">
+        <div class="calculator-box">
+            <div class="display-screen">
+                <div id="previous-operand" class="previous-history"></div>
+                <div id="current-operand" class="current-output">0</div>
+            </div>
+
+            <div class="button-grid">
+                <button class="grid-btn control-btn" data-action="clear">AC</button>
+                <button class="grid-btn control-btn" data-action="delete">DEL</button>
+                <button class="grid-btn operator-btn" data-operator="%">%</button>
+                <button class="grid-btn operator-btn" data-operator="/">÷</button>
+
+                <button class="grid-btn number-btn">7</button>
+                <button class="grid-btn number-btn">8</button>
+                <button class="grid-btn number-btn">9</button>
+                <button class="grid-btn operator-btn" data-operator="*">&times;</button>
+
+                <button class="grid-btn number-btn">4</button>
+                <button class="grid-btn number-btn">5</button>
+                <button class="grid-btn number-btn">6</button>
+                <button class="grid-btn operator-btn" data-operator="-">&minus;</button>
+
+                <button class="grid-btn number-btn">1</button>
+                <button class="grid-btn number-btn">2</button>
+                <button class="grid-btn number-btn">3</button>
+                <button class="grid-btn operator-btn" data-operator="+">+</button>
+
+                <button class="grid-btn number-btn span-two">0</button>
+                <button class="grid-btn number-btn" data-action="decimal">.</button>
+                <button class="grid-btn equals-btn" id="equals-key">=</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="/javascript/calculator.js"></script>
+</body>
+</html>

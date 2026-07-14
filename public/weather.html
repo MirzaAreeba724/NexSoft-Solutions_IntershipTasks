@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Weather Forecast | Task 5</title>
+    <link rel="stylesheet" href="/stylesheets/weather.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Sky<span>Pulse.</span></div>
+        <ul class="nav-links">
+            <li><a href="/">Dashboard Hub</a></li>
+        </ul>
+    </nav>
+
+    <main class="weather-container">
+        <div class="weather-card">
+            <div class="search-box">
+                <input type="text" id="city-input" placeholder="Search global coordinates (e.g. London, Lahore)..." autocomplete="off">
+                <button id="search-btn">Search</button>
+            </div>
+
+            <div id="error-message" class="error-banner hidden">
+                <p>Location data not found. Please verify spelling coordinates.</p>
+            </div>
+
+            <div id="weather-body" class="weather-body hidden">
+                <div class="main-info">
+                    <h2 id="location-name">Lahore, PK</h2>
+                    <div class="weather-status">
+                        <span id="weather-icon" class="weather-icon">☀️</span>
+                        <h1 id="temperature-text">32°C</h1>
+                    </div>
+                    <p id="condition-desc" class="condition-desc">Clear Skies</p>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="icon">💧</div>
+                        <div class="meta">
+                            <h3 id="humidity-text">45%</h3>
+                            <p>Humidity</p>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="icon">💨</div>
+                        <div class="meta">
+                            <h3 id="wind-text">12 km/h</h3>
+                            <p>Wind Velocity</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="welcome-state" class="welcome-state">
+                <span class="pulse-globe">🌍</span>
+                <p>Enter a city location to pull down diagnostic meteorological datasets.</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="/javascript/weather.js"></script>
+</body>
+</html>

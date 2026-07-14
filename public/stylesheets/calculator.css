@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0b0f19;
+    color: #e2e8f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar Continuity */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background-color: #0f172a;
+    border-bottom: 1px solid #1e293b;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+    .logo span {
+        color: #38bdf8;
+    }
+
+.nav-links {
+    list-style: none;
+}
+
+    .nav-links a {
+        color: #38bdf8;
+        text-decoration: none;
+        font-weight: 600;
+        background-color: #1e293b;
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: 1px solid #334155;
+        transition: background 0.2s;
+    }
+
+        .nav-links a:hover {
+            background-color: #0f172a;
+        }
+
+/* Main Wrapper Centering */
+.calculator-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.calculator-box {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 360px;
+    padding: 24px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark Matte Display Monitor Screen */
+.display-screen {
+    background-color: #0b0f19;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    min-height: 100px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.previous-history {
+    color: #64748b;
+    font-size: 0.95rem;
+    min-height: 20px;
+}
+
+.current-output {
+    color: #ffffff;
+    font-size: 2.2rem;
+    font-weight: 600;
+}
+
+/* Grid Panel Infrastructure */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.grid-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.1s;
+    user-select: none;
+}
+
+    .grid-btn:active {
+        transform: scale(0.96);
+    }
+
+/* Keys Theming Differentiation */
+.number-btn {
+    background-color: #111827;
+    color: #cbd5e1;
+    border: 1px solid #1e293b;
+}
+
+    .number-btn:hover {
+        background-color: #1e293b;
+        color: #ffffff;
+    }
+
+.control-btn {
+    background-color: #1f2937;
+    color: #f43f5e; /* Vibrant soft crimson accent */
+    border: 1px solid #374151;
+}
+
+    .control-btn:hover {
+        background-color: #374151;
+    }
+
+.operator-btn {
+    background-color: rgba(56, 189, 248, 0.05);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+    .operator-btn:hover {
+        background-color: rgba(56, 189, 248, 0.15);
+    }
+
+.equals-btn {
+    grid-column: span 1;
+    background-color: #38bdf8;
+    color: #0b0f19;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+    .equals-btn:hover {
+        background-color: #0ea5e9;
+    }
+
+/* Dynamic Multi-column Layout Helpers */
+.span-two {
+    grid-column: span 2;
+}

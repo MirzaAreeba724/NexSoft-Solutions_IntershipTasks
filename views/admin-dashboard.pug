@@ -1,0 +1,29 @@
+extends admin-layout
+
+block content
+  h1 Dashboard Overview
+  .grid-container
+    .card
+      h3 Total Movies
+      p 1,240
+    .card
+      h3 API Calls
+      p 8,902
+    .card
+      h3 Active Users
+      p 456
+
+  .card(style="margin-top: 40px;")
+    h3 Movie Trends
+    canvas#myChart
+
+  script(src="https://cdn.jsdelivr.net/npm/chart.js")
+  script.
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{ label: 'Movies Added', data: [12, 19, 3, 5, 2, 3], borderColor: '#2563eb' }]
+      }
+    });

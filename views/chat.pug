@@ -1,0 +1,55 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title= title
+    link(rel="stylesheet", href="/stylesheets/style.css")
+    link(rel="stylesheet", href="/stylesheets/chat.css")
+    script(src="/socket.io/socket.io.js")
+  body
+    div.dashboard-container
+      header.dashboard-header
+        h1 Real-Time Chat Workspace
+        p Collaborate with online team members in real-time.
+        a(href="/", class="back-dashboard") ← Return to Dashboard
+
+      main.chat-grid
+        // Prompt for nickname if not logged in via session
+        div#auth-overlay(style=username ? "display: none;" : "display: flex;")
+          div.auth-box
+            h2 Access Chat Room
+            p Enter a nickname to join the active chat directory.
+            input#nickname-input(type="text", placeholder="Type your nickname...")
+            button#join-btn Join Chat
+
+        // Main Chat Wrapper (Shown when registered/logged in)
+        div.chat-wrapper(style=username ? "display: grid;" : "display: none;")
+          
+          // Sidebar: Channels and Online Users
+          aside.chat-sidebar
+            div.sidebar-section
+              h3 Group Channels
+              ul.channels-list
+                li.channel-item.active(data-room="General") # General
+                li.channel-item(data-room="Support") # Support
+                li.channel-item(data-room="Random") # Random
+
+            div.sidebar-section
+              h3 Online Users
+              ul#users-list
+
+          // Chat Container
+          section.chat-area
+            header.chat-area-header
+              span#active-chat-title Group Chat: #General
+              span.user-tag Active User: 
+                strong#current-user #{username || ''}
+
+            div#chat-messages.chat-messages
+
+            form#chat-form.chat-input-area
+              input#message-input(type="text", placeholder="Type a message...", required, autocomplete="off")
+              button(type="submit") Send
+
+    script(src="/javascript/chat.js")
